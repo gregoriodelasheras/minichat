@@ -76,6 +76,7 @@ The development of this application was organized through a Kanban board. You ca
 ## Dev Dependencies
 
 - babel
+- eslint
 
 ## License
 
