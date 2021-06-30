@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 
 <p align="center">
-  <a href="https://myvhs.netlify.app/">
+  <a href="#">
     <img src="" alt="Logo" width="600">
   </a>
   <p align="center">
@@ -15,8 +15,7 @@
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
-    <li><a href="#dependencies">Dependencies</a></li>
-    <li><a href="#dev-dependencies">Dev Dependencies</a></li>
+    <li><a href="#design">Design</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -64,7 +63,7 @@ The development of this application was organized through a Kanban board. You ca
 - [React Native](https://reactnative.dev/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
-## Dependencies
+### Dependencies
 
 - expo
 - expo-status-bar
@@ -73,10 +72,20 @@ The development of this application was organized through a Kanban board. You ca
 - react-native
 - react-native-web
 
-## Dev Dependencies
+### Dev Dependencies
 
 - babel
 - eslint
+
+## Design
+
+### Color Palette
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/77192223/123962398-b7249980-d9b1-11eb-9aa3-84db176d291c.png" alt="Color Palette">
+</p>
+
+### Wireframes
 
 ## License
 
