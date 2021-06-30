@@ -32,7 +32,7 @@
 
 ### Objective:
 
-- Build a chat app for mobile devices using React Native. The app provide users with a minimalistic chat interface and the possibility to share images and their location.
+- Build a chat app for mobile devices using React Native that provides users with a minimalistic chat interface and the possibility to share images and their location.
 
 ### User Stories:
 
