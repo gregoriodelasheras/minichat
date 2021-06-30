@@ -90,6 +90,10 @@ The development of this application was organized through a Kanban board. You ca
 
 ### Wireframes
 
+1- Start component
+
+<img src="https://user-images.githubusercontent.com/77192223/123971801-a4629280-d9ba-11eb-87d6-76ed170b1140.png" alt="Wireframe 1">
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
