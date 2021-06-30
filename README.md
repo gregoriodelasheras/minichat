@@ -61,16 +61,19 @@ The development of this application was organized through a Kanban board. You ca
 - [JavaScript](https://www.javascript.com/)
 - [Node.js](https://nodejs.org/)
 - [React Native](https://reactnative.dev/)
+- [React Navigation](https://reactnavigation.org/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
 ### Dependencies
 
 - expo
+- expo-font
 - expo-status-bar
 - react
 - react-dom
 - react-native
 - react-native-web
+- react-navigation
 
 ### Dev Dependencies
 
