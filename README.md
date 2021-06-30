@@ -1,8 +1,8 @@
 <!-- PROJECT LOGO -->
 
 <p align="center">
-  <a href="https://myvhs.netlify.app/">
-    <img src="" alt="Logo" width="600">
+  <a href="https://github.com/gregoriodelasheras/minichat">
+    <img src="https://user-images.githubusercontent.com/77192223/123979163-c3642300-d9c0-11eb-9bbf-ba9a886294b3.png" alt="Logo" width="600">
   </a>
   <p align="center">
     Just another chat app for mobile devices built with React Native.
@@ -15,8 +15,7 @@
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
-    <li><a href="#dependencies">Dependencies</a></li>
-    <li><a href="#dev-dependencies">Dev Dependencies</a></li>
+    <li><a href="#design">Design</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -62,21 +61,38 @@ The development of this application was organized through a Kanban board. You ca
 - [JavaScript](https://www.javascript.com/)
 - [Node.js](https://nodejs.org/)
 - [React Native](https://reactnative.dev/)
+- [React Navigation](https://reactnavigation.org/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
-## Dependencies
+### Dependencies
 
 - expo
+- expo-font
 - expo-status-bar
 - react
 - react-dom
 - react-native
 - react-native-web
+- react-navigation
 
-## Dev Dependencies
+### Dev Dependencies
 
 - babel
 - eslint
+
+## Design
+
+### Color Palette
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/77192223/123962398-b7249980-d9b1-11eb-9aa3-84db176d291c.png" alt="Color Palette">
+</p>
+
+### Wireframes
+
+1- Start component
+
+<img src="https://user-images.githubusercontent.com/77192223/123971801-a4629280-d9ba-11eb-87d6-76ed170b1140.png" alt="Wireframe 1">
 
 ## License
 
