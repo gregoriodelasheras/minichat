@@ -1,8 +1,8 @@
 <!-- PROJECT LOGO -->
 
 <p align="center">
-  <a href="#">
-    <img src="" alt="Logo" width="600">
+  <a href="https://github.com/gregoriodelasheras/minichat">
+    <img src="https://user-images.githubusercontent.com/77192223/123979163-c3642300-d9c0-11eb-9bbf-ba9a886294b3.png" alt="Logo" width="600">
   </a>
   <p align="center">
     Just another chat app for mobile devices built with React Native.
