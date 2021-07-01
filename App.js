@@ -48,7 +48,9 @@ export default function App() {
           name='Chat'
           component={Chat}
           // Pass route prop as argument to the screen to set component title.
-          options={({ route }) => ({ title: route.params.name })}
+          options={({ route }) => ({
+            title: `Chat with TestBot and ${route.params.name}`,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
