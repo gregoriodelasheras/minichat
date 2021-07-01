@@ -53,7 +53,7 @@ export default function Chat(props) {
         createdAt: new Date(),
         system: true,
       },
-      // TestBot Message #1
+      // TestBot Message #1.
       {
         _id: 3,
         text: `Hello ${name}!`,
