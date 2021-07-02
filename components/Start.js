@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   StyleSheet,
   ImageBackground,
+  Image,
   KeyboardAvoidingView,
   View,
   Text,
@@ -12,14 +13,14 @@ import {
 
 // Set image background.
 const appImageBackground = require('../assets/appbackground.png');
-// Set background colors: 'Blue Yonder', 'Mulberry', 'Light Salmon', 'Lavender Web'
+// Set background colors: 'Blue Yonder', 'Mulberry', 'Light Salmon', 'Lavender Web'.
 const colorPalette = ['#4A6FA5', '#B95F89', '#F7A278', '#D9DBF1'];
 
 export default function Start(props) {
   const [name, setName] = useState('');
   const [bgcolor, setbgcolor] = useState('');
 
-  handleOnPressChat = (name, bgcolor) => {
+  const handleOnPressChat = (name, bgcolor) => {
     // Sends alert to user if not entered name or chosen color.
     name === '' && bgcolor === ''
       ? Alert.alert(
@@ -45,15 +46,29 @@ export default function Start(props) {
   return (
     <ImageBackground
       source={appImageBackground}
-      style={styles.appImageBackground}>
+      style={styles.appImageBackground}
+      /* Accessibility */
+      accessible={true}
+      accessibilityLabel='App image background'
+      accessibilityHint='Shows an illustration of a woman and a man talking.'
+      accessibilityRole='image'>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={100}>
-        {/* Box 1: Logo / Title. */}
+        {/* Box 1: Logo */}
         <View style={styles.box1}>
-          <Text style={styles.titleStart}>miniChat</Text>
+          <Image
+            style={styles.logoApp}
+            source={require('../assets/logo.png')}
+            /* Accessibility */
+            accessible={true}
+            accessibilityLabel='App logo'
+            accessibilityHint='Shows the word miniChat, and to the left two chat bubbles.'
+            accessibilityRole='image'
+          />
         </View>
+
         {/* Box 2: User menu. */}
         <View style={[styles.elementShadow, styles.box2]}>
           {/* Box 2 / Area 1: Set name of user. */}
@@ -63,11 +78,21 @@ export default function Start(props) {
             value={name}
             autoCompleteType='name' // Only Android
             placeholder='Enter your name here...'
+            /* Accessibility */
+            accessible={true}
+            accessibilityLabel='Name input'
+            accessibilityHint='Enter here your name that will appear for your contacts in the chat.'
           />
 
           {/* Box 2 / Area 2: Set background color chat. */}
           <Text style={styles.chooseText}>Choose Background Color:</Text>
-          <View style={styles.menuSetColor}>
+          <View
+            style={styles.menuSetColor}
+            /* Accessibility */
+            accessible={true}
+            accessibilityLabel='Background color menu'
+            accessibilityHint='Menu to select the background color that will appear in the chat.'
+            accessibilityRole='menu'>
             {colorPalette.map((icolor) => (
               <TouchableOpacity
                 key={icolor}
@@ -78,6 +103,11 @@ export default function Start(props) {
                 ]}
                 activeOpacity={0.6}
                 onPress={() => setbgcolor(icolor)}
+                /* Accessibility */
+                accessible={true}
+                accessibilityLabel='Background color selector'
+                accessibilityHint={`Select as background the hexadecimal color ${icolor}.`}
+                accessibilityRole='menuitem'
               />
             ))}
           </View>
@@ -86,7 +116,12 @@ export default function Start(props) {
           <TouchableOpacity
             style={[styles.elementShadow, styles.buttonInput]}
             activeOpacity={0.6}
-            onPress={() => handleOnPressChat(name, bgcolor)}>
+            onPress={() => handleOnPressChat(name, bgcolor)}
+            /* Accessibility */
+            accessible={true}
+            accessibilityLabel='Start Chatting'
+            accessibilityHint='Go to chat screen'
+            accessibilityRole='button'>
             <Text style={styles.buttonText}>Start Chatting</Text>
           </TouchableOpacity>
         </View>
@@ -115,17 +150,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  titleStart: {
-    width: '100%',
-    textAlign: 'center',
-    fontSize: 45,
-    fontFamily: 'SemiBold',
-    textShadowColor: '#0A0A0A',
-    textShadowRadius: 20,
-    color: '#F5F5F5',
+  logoApp: {
+    width: 300,
+    height: 100,
   },
 
-  // Box 2: Card User Menu.
+  // Box 2: User Menu.
   box2: {
     flex: 0.5,
     alignItems: 'center',
