@@ -1,91 +1,103 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 
 // GiftedChat.
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 
+// Firebase + Firestore.
+const firebase = require('firebase');
+require('firebase/firestore');
+
 export default function Chat(props) {
-  // Set chat messages.
-  const [messages, setMessages] = useState([]);
   // Get color parameter from Start component to set background color.
   const bgcolor = props.route.params.bgcolor;
+  // Get user name from Start component.
   const name = props.route.params.name;
+  // Set chat messages.
+  const [messages, setMessages] = useState([]);
+  // Set user ID (authentication).
+  const [uid, setUid] = useState(null);
+
+  // Add Firebase SDK.
+  const firebaseConfig = {
+    apiKey: 'AIzaSyDnmUSVDxoqmX3Vh8Vwb-0fdSgBj04w0pk',
+    authDomain: 'minichat2-b3fdf.firebaseapp.com',
+    projectId: 'minichat2-b3fdf',
+    storageBucket: 'minichat2-b3fdf.appspot.com',
+    messagingSenderId: '841797473504',
+    appId: '1:841797473504:web:7d98f08ea0e9d2dbd1ac85',
+  };
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  // Listen for updates in Firestore messages collection.
+  const referenceChatMessages = firebase.firestore().collection('messages');
 
   useEffect(() => {
-    setMessages([
-      // TestBot Message #2.
-      {
-        _id: 7,
-        text: 'This native app is cool!',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://herasdev.com/img/f-01.jpg',
-        },
-      },
-      // User Message #2.
-      {
-        _id: 6,
-        text: 'What do you think about this app?',
-        createdAt: new Date(),
-        user: {
-          _id: 1,
-          name: 'React Native',
-          avatar: 'https://herasdev.com/img/f-01.jpg',
-        },
-      },
-      // User Message #1.
-      {
-        _id: 5,
-        text: 'Hello to you, TestBot!',
-        createdAt: new Date(),
-        user: {
-          _id: 1,
-          name: 'React Native',
-          avatar: 'https://herasdev.com/img/f-01.jpg',
-        },
-      },
-      // System Message #2: User chat entry message.
-      {
-        _id: 4,
-        text: `${name} entered the chat`,
-        createdAt: new Date(),
-        system: true,
-      },
-      // TestBot Message #1.
-      {
-        _id: 3,
-        text: `Hello ${name}!`,
-        createdAt: new Date(Date.UTC(2021, 5, 30, 17, 21, 0)),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://herasdev.com/img/f-01.jpg',
-        },
-      },
-      // System Message #2: TestBot chat entry message.
-      {
-        _id: 2,
-        text: 'TestBot entered the chat',
-        createdAt: new Date(Date.UTC(2021, 5, 30, 17, 20, 0)),
-        system: true,
-      },
-      // System Message #1: end-to-end encryption.
-      {
-        _id: 1,
-        text: 'This conversation is secured with end-to-end encryption.',
-        createdAt: new Date(Date.UTC(1987, 4, 11, 0, 0, 0)),
-        system: true,
-      },
-    ]);
-  }, []); // No dependencies: only run once.
+    // First check if the user is signed in. If not, create a new user.
+    const authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        firebase.auth().signInAnonymously();
+      }
 
-  const onSend = useCallback((messages = []) => {
+      setUid(user.uid);
+      setMessages([]);
+    });
+
+    // Stop receiving updates about a collection.
+    const unsubscribe = referenceChatMessages
+      .orderBy('createdAt', 'desc')
+      .onSnapshot(onCollectionUpdate);
+
+    // Unmount.
+    return () => {
+      unsubscribe();
+      authUnsubscribe();
+    };
+  }, []);
+
+  // Render the real-time changes of the collection with querySnapshot.
+  const onCollectionUpdate = (querySnapshot) => {
+    const messages = [];
+    // Go through all the documents in the collection.
+    querySnapshot.forEach((doc) => {
+      // Save the fields of each document.
+      const data = doc.data();
+
+      // Add the data extracted from the collection to the array.
+      messages.push({
+        _id: data._id,
+        text: data.text,
+        createdAt: data.createdAt.toDate(),
+        user: data.user,
+      });
+    });
+    // Set the message array with the updated data from Firestore.
+    setMessages(messages);
+  };
+
+  // Get the new message written by the user.
+  const onSend = (messages = []) => {
+    // Append the new message to the chat screen.
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, messages),
     );
-  }, []);
+
+    // Each new message written by the user is sent in the first index of the array.
+    addMessage(messages[0]);
+  };
+
+  // Save the message of the user in Firestore.
+  const addMessage = (message) => {
+    referenceChatMessages.add({
+      _id: message._id,
+      text: message.text,
+      createdAt: message.createdAt,
+      user: message.user,
+    });
+  };
 
   // Edit chat conversation bubbles.
   const renderBubble = (props) => {
@@ -125,7 +137,10 @@ export default function Chat(props) {
         messages={messages}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: 1,
+          /* Authenticated ID of the signed user. */
+          _id: uid,
+          /* Name of the user typed in the Start component. */
+          name: name,
         }}
       />
     </KeyboardAvoidingView>
