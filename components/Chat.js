@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
+
+// React Native async-storage.
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// React Native Network Info (NetInfo).
+import NetInfo from '@react-native-community/netinfo';
 
 // GiftedChat.
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
 
 // Firebase + Firestore.
 const firebase = require('firebase');
@@ -16,7 +22,9 @@ export default function Chat(props) {
   // Set chat messages.
   const [messages, setMessages] = useState([]);
   // Set user ID (authentication).
-  const [uid, setUid] = useState(null);
+  const [uid, setUid] = useState('');
+  // Set user connection status
+  const [isConnected, setIsConnected] = useState(false);
 
   // Add Firebase SDK.
   const firebaseConfig = {
@@ -35,25 +43,94 @@ export default function Chat(props) {
   // Listen for updates in Firestore messages collection.
   const referenceChatMessages = firebase.firestore().collection('messages');
 
-  useEffect(() => {
-    // First check if the user is signed in. If not, create a new user.
-    const authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        firebase.auth().signInAnonymously();
-      }
+  // Asynchronous function to get messages from asyncStorage.
+  const getMessages = async () => {
+    let messages = '';
+    let uid = '';
+    try {
+      // Get data from asyncStorage.
+      messages = (await AsyncStorage.getItem('messages')) || [];
+      uid = await AsyncStorage.getItem('uid');
+      // Set user ID from asyncStorage.
+      setUid(JSON.parse(uid));
+      // Set messages from asyncStorage.
+      setMessages(JSON.parse(messages));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-      setUid(user.uid);
+  // Asynchronous function to save messages in asyncStorage.
+  const saveMessages = async () => {
+    try {
+      await AsyncStorage.setItem('messages', JSON.stringify(messages));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // Asynchronous function to delete user messages stored in asyncStorage.
+  // ! This function is only used in the development environment.
+  const deleteMessages = async () => {
+    try {
+      await AsyncStorage.removeItem('messages');
       setMessages([]);
-    });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-    // Stop receiving updates about a collection.
-    const unsubscribe = referenceChatMessages
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(onCollectionUpdate);
+  useEffect(() => {
+    // Void functions to unmount when the app is offline.
+    let authUnsubscribe = () => {};
+    let unsubscribe = () => {};
+
+    // Check if the user is online or offline.
+    NetInfo.fetch().then((connection) => {
+      if (connection.isConnected) {
+        // User is online
+        console.log('App is online');
+        setIsConnected(true);
+
+        // Authenticate via Firebase.
+        authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+          // First check if the user is signed in. If not, create a new user.
+          if (!user) {
+            await firebase.auth().signInAnonymously();
+          }
+
+          // Assign an ID to the user.
+          setUid(user.uid);
+          // Store the user ID in asyncStorage.
+          AsyncStorage.setItem('uid', JSON.stringify(user.uid));
+
+          setMessages([]);
+        });
+
+        unsubscribe = referenceChatMessages
+          .orderBy('createdAt', 'desc')
+          .onSnapshot(onCollectionUpdate);
+      } else {
+        // User is offline
+        console.log('App is offline');
+        setIsConnected(false);
+
+        // Load and display the messages from asyncStorage.
+        getMessages();
+
+        // send alert to the user about connection status.
+        Alert.alert(
+          'Please check your internet connection.',
+          'The app is not connected to Internet. You will need access to receive and send new messages. For now you can use the app in read mode.',
+        );
+      }
+    });
 
     // Unmount.
     return () => {
+      // Stop receiving updates about a collection.
       unsubscribe();
+      // Stop authentication request.
       authUnsubscribe();
     };
   }, []);
@@ -82,14 +159,16 @@ export default function Chat(props) {
   const onSend = (messages = []) => {
     // Append the new message to the chat screen.
     setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages),
+      GiftedChat.append(previousMessages.messages, messages),
     );
 
     // Each new message written by the user is sent in the first index of the array.
     addMessage(messages[0]);
+    // Save messages in asyncStorage.
+    saveMessages();
   };
 
-  // Save the message of the user in Firestore.
+  // Store new message in Firestore.
   const addMessage = (message) => {
     referenceChatMessages.add({
       _id: message._id,
@@ -126,14 +205,23 @@ export default function Chat(props) {
     );
   };
 
+  // Render InputToolbar if the user is online.
+  const renderInputToolbar = (props) => {
+    if (isConnected == false) {
+    } else {
+      return <InputToolbar {...props} />;
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container(bgcolor)}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={100}>
+      keyboardVerticalOffset={80}>
       {/* GiftedChat component. */}
       <GiftedChat
         renderBubble={renderBubble}
+        renderInputToolbar={renderInputToolbar}
         messages={messages}
         onSend={(messages) => onSend(messages)}
         user={{
