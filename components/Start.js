@@ -55,7 +55,7 @@ export default function Start(props) {
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={100}>
+        keyboardVerticalOffset={50}>
         {/* Box 1: Logo */}
         <View style={styles.box1}>
           <Image
@@ -164,6 +164,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 2,
     backgroundColor: '#F5F5F5',
+    maxHeight: '50%',
+    minHeight: 300,
   },
 
   // Box 2 / Area 1: Set name of user.
