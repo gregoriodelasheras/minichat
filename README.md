@@ -66,13 +66,12 @@ The development of this application was organized through a Kanban board. You ca
 
 ### Dependencies
 
+- async-storage
 - expo
-- expo-font
-- expo-status-bar
+- firebase
+- netinfo
 - react
-- react-dom
 - react-native
-- react-native-web
 - react-navigation
 
 ### Dev Dependencies
