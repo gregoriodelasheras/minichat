@@ -9,6 +9,8 @@
   </p>
 </p>
 
+<br>
+
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -16,14 +18,16 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#design">Design</a></li>
+    <li><a href="#get-started">Get Started</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
-<!-- ABOUT THE PROJECT -->
+<br>
 
+<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 <p align="center">
@@ -54,6 +58,9 @@
 
 The development of this application was organized through a Kanban board. You can see the board by [following this link](https://trello.com/b/HzQdvE53/achievement-5-project-minichat).
 
+<br>
+
+<!-- BUILT WITH -->
 ## Built With
 
 - [Android Studio](https://developer.android.com/)
@@ -83,6 +90,9 @@ The development of this application was organized through a Kanban board. You ca
 - babel
 - eslint
 
+<br>
+
+<!-- DESIGN -->
 ## Design
 
 ### Color Palette
@@ -93,24 +103,34 @@ The development of this application was organized through a Kanban board. You ca
 
 ### Wireframes
 
-1- Start component
+Start component
 
 <img src="https://user-images.githubusercontent.com/77192223/123971801-a4629280-d9ba-11eb-87d6-76ed170b1140.png" alt="Wireframe 1">
 
+<br>
+
+<!-- GET STARTED -->
+## Get Started
+
+<br>
+
+<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-<!-- CONTACT -->
+<br>
 
+<!-- CONTACT -->
 ## Contact
 
 Francisco Gregorio de las Heras: [LinkedIn](https://www.linkedin.com/in/francisco-gregorio-de-las-heras/)
 
 Project Link: [https://github.com/gregoriodelasheras/minichat](https://github.com/gregoriodelasheras/minichat)
 
-<!-- ACKNOWLEDGEMENTS -->
+<br>
 
+<!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
 This project was done as part of [CareerFoundry's Full-Stack Web Development Program](https://careerfoundry.com/en/courses/become-a-web-developer/) (Project 5: Native App Development & React Native).
