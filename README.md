@@ -19,6 +19,7 @@
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#design">Design</a></li>
     <li><a href="#get-started">Get Started</a></li>
+    <li><a href="#final-reflections">Final Reflections</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -172,6 +173,23 @@ npm start
 Expo will start automatically and will give you several options to run, including the option to launch the app in a virtualized operating system that you have open at that moment (for example, with [Android Studio](https://developer.android.com/)).
 
 And that's it! Happy coding/hacking! 🤓
+
+<br>
+
+<!-- FINAL REFLECTIONS -->
+## Final Reflections
+
+For this project I took the role of developer. I was in charge of coding the application and optimizing its performance.
+
+I started the project by identifying the objective of the application and the user requirements, then I created a Kanban board with all the tasks I had to face to create the application. Then, I made design mockups to visualize how the UI would look like. And finally, I started the coding process. During the whole process I was continuously testing the application, both on a real mobile device (Android) and on a virtualized device (also Android).
+
+For the project I made two important decisions. The first was to use my own color palette and background image for the application. This way I could give the application a personal touch. The second was to use Hooks to create the application. The project was taught to be done using the React class model, but I strongly believe in the importance of adopting Hooks, especially for code maintenance from a scalability perspective.
+
+For the future, I think the application could benefit from a better authentication system. Implement, for example, login via e-mail account or username and password. Currently there is only one instance in the chat, so there are no private rooms between users.
+
+One aspect to improve is the UI part. Since this project was my first approach to React Native, and I had little time to develop it, the interface was functional but not very attractive. The same happens with the UX part: the experience is different depending on the size of the device and the operating system used. I need to improve the way the components behave so that the UX is uniform and pleasant for all users.
+
+To finish, I can conclude that this project was an interesting way to learn how to create native apps with React Native. It was challenging and I learned new technologies that will certainly be very useful for my future work. Native apps are here to stay, and I believe that in the near future they will be the new paradigm for programming applications on mobile devices.
 
 <br>
 
