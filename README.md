@@ -58,10 +58,11 @@ The development of this application was organized through a Kanban board. You ca
 
 - [Android Studio](https://developer.android.com/)
 - [Expo](https://expo.io/)
+- [Firebase](https://firebase.google.com/)
+- [Gifted Chat](https://github.com/FaridSafi/react-native-gifted-chat)
 - [JavaScript](https://www.javascript.com/)
 - [Node.js](https://nodejs.org/)
 - [React Native](https://reactnative.dev/)
-- [React Navigation](https://reactnavigation.org/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
 ### Dependencies
@@ -72,6 +73,9 @@ The development of this application was organized through a Kanban board. You ca
 - netinfo
 - react
 - react-native
+- react-native-async-storage
+- react-native-gifted-chat
+- react-native-maps
 - react-navigation
 
 ### Dev Dependencies
@@ -109,5 +113,9 @@ Project Link: [https://github.com/gregoriodelasheras/minichat](https://github.co
 
 ## Acknowledgements
 
-- [Itua Akhator](https://github.com/iakhator)
-- [Vinh-Tuong Mai](https://github.com/mvtuong)
+This project was done as part of [CareerFoundry's Full-Stack Web Development Program](https://careerfoundry.com/en/courses/become-a-web-developer/) (Project 5: Native App Development & React Native).
+
+- Project tutor: [Itua Akhator](https://github.com/iakhator)
+- Project mentor: [Vinh-Tuong Mai](https://github.com/mvtuong)
+
+Special thanks to Bárbara Starke for making the illustration for the start screen of the app.
