@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 
 // Change default font to Monserrat.
 import AppLoading from 'expo-app-loading';
@@ -23,6 +24,9 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
+
+// Ignore error and warning alerts inside the app (show only in the console).
+LogBox.ignoreAllLogs();
 
 export default function App() {
   // Select the fonts to use.
@@ -49,7 +53,7 @@ export default function App() {
           component={Chat}
           // Pass route prop as argument to the screen to set component title.
           options={({ route }) => ({
-            title: route.params.name,
+            title: `${route.params.name}'s Chat`,
           })}
         />
       </Stack.Navigator>

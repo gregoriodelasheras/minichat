@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, KeyboardAvoidingView, Alert } from 'react-native';
-
+import CustomActions from './CustomActions';
 // React Native async-storage.
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 // React Native Network Info (NetInfo).
 import NetInfo from '@react-native-community/netinfo';
-
 // GiftedChat.
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat';
-
+// React Native Map component for mobile devices.
+import MapView from 'react-native-maps';
 // Firebase + Firestore.
-const firebase = require('firebase');
-require('firebase/firestore');
+import firebase from 'firebase';
+import 'firebase/firestore';
 
 export default function Chat(props) {
   // Get color parameter from Start component to set background color.
@@ -23,7 +22,7 @@ export default function Chat(props) {
   const [messages, setMessages] = useState([]);
   // Set user ID (authentication).
   const [uid, setUid] = useState('');
-  // Set user connection status
+  // Set user connection status.
   const [isConnected, setIsConnected] = useState(false);
 
   // Add Firebase SDK.
@@ -56,7 +55,7 @@ export default function Chat(props) {
       // Set messages from asyncStorage.
       setMessages(JSON.parse(messages));
     } catch (error) {
-      console.log(error.message);
+      console.error(error);
     }
   };
 
@@ -65,7 +64,7 @@ export default function Chat(props) {
     try {
       await AsyncStorage.setItem('messages', JSON.stringify(messages));
     } catch (error) {
-      console.log(error.message);
+      console.error(error);
     }
   };
 
@@ -76,7 +75,7 @@ export default function Chat(props) {
       await AsyncStorage.removeItem('messages');
       setMessages([]);
     } catch (error) {
-      console.log(error.message);
+      console.error(error);
     }
   };
 
@@ -88,7 +87,7 @@ export default function Chat(props) {
     // Check if the user is online or offline.
     NetInfo.fetch().then((connection) => {
       if (connection.isConnected) {
-        // User is online
+        // User is online.
         console.log('App is online');
         setIsConnected(true);
 
@@ -111,7 +110,7 @@ export default function Chat(props) {
           .orderBy('createdAt', 'desc')
           .onSnapshot(onCollectionUpdate);
       } else {
-        // User is offline
+        // User is offline.
         console.log('App is offline');
         setIsConnected(false);
 
@@ -146,9 +145,11 @@ export default function Chat(props) {
       // Add the data extracted from the collection to the array.
       messages.push({
         _id: data._id,
-        text: data.text,
+        text: data.text || '',
         createdAt: data.createdAt.toDate(),
         user: data.user,
+        image: data.image || null,
+        location: data.location || null,
       });
     });
     // Set the message array with the updated data from Firestore.
@@ -172,9 +173,11 @@ export default function Chat(props) {
   const addMessage = (message) => {
     referenceChatMessages.add({
       _id: message._id,
-      text: message.text,
+      text: message.text || '',
       createdAt: message.createdAt,
       user: message.user,
+      image: message.image || null,
+      location: message.location || null,
     });
   };
 
@@ -213,17 +216,45 @@ export default function Chat(props) {
     }
   };
 
+  // Render CustomActions buttons.
+  const renderCustomActions = (props) => {
+    return <CustomActions {...props} />;
+  };
+
+  // Render a custom view for location data.
+  const renderCustomView = (props) => {
+    const { currentMessage } = props;
+
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{ width: 150, height: 100, borderRadius: 10, margin: 2 }}
+          region={{
+            latitude: Number(currentMessage.location.latitude),
+            longitude: Number(currentMessage.location.longitude),
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container(bgcolor)}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={80}>
+      keyboardVerticalOffset={100}>
       {/* GiftedChat component. */}
       <GiftedChat
-        renderBubble={renderBubble}
-        renderInputToolbar={renderInputToolbar}
         messages={messages}
         onSend={(messages) => onSend(messages)}
+        isConnected={isConnected}
+        renderBubble={renderBubble}
+        renderInputToolbar={renderInputToolbar}
+        renderActions={renderCustomActions}
+        renderCustomView={renderCustomView}
         user={{
           /* Authenticated ID of the signed user. */
           _id: uid,
