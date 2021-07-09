@@ -32,7 +32,7 @@
 ## About The Project
 
 <p align="center">
-  <img src="" alt="App Screenshot">
+  <img src="https://user-images.githubusercontent.com/77192223/123971801-a4629280-d9ba-11eb-87d6-76ed170b1140.png" alt="App Screenshot">
 </p>
 
 ### Objective:
@@ -101,12 +101,6 @@ The development of this application was organized through a Kanban board. You ca
 <p align="center">
   <img src="https://user-images.githubusercontent.com/77192223/123962398-b7249980-d9b1-11eb-9aa3-84db176d291c.png" alt="Color Palette">
 </p>
-
-### Wireframes
-
-Start component
-
-<img src="https://user-images.githubusercontent.com/77192223/123971801-a4629280-d9ba-11eb-87d6-76ed170b1140.png" alt="Wireframe 1">
 
 <br>
 
