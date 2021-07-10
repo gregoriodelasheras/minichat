@@ -206,7 +206,7 @@ Project Link: [https://github.com/gregoriodelasheras/minichat](https://github.co
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 
-This project was done as part of [CareerFoundry's Full-Stack Web Development Program](https://careerfoundry.com/en/courses/become-a-web-developer/) (Project 5: Native App Development & React Native).
+This project was done as part of [CareerFoundry's Full-Stack Web Development Program](https://careerfoundry.com/en/courses/become-a-web-developer/) (Project 5 - React Native Mobile Chat App).
 
 - Project tutor: [Itua Akhator](https://github.com/iakhator)
 - Project mentor: [Vinh-Tuong Mai](https://github.com/mvtuong)
